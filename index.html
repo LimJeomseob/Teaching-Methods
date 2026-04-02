@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026학년도 1학기 AI기반 교수법 연구회 신청</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f3f4f6; }
+        .form-input { 
+            width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; 
+            outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input:focus { border-color: #003366; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1); }
+        .dropzone { border: 2px dashed #cbd5e1; transition: all 0.2s ease; }
+        .dropzone.dragover { border-color: #003366; background-color: #eff6ff; }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased py-10 px-4 md:px-0">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- [프로그램 안내] 섹션 -->
+        <header class="bg-[#003366] text-white p-8 rounded-t-2xl shadow-lg relative overflow-hidden">
+            <div class="absolute top-0 right-0 opacity-10 pointer-events-none">
+                <i data-lucide="cpu" class="w-64 h-64 -mt-10 -mr-10"></i>
+            </div>
+            <div class="relative z-10">
+                <div class="flex items-center gap-2 mb-2 text-blue-200 text-sm font-semibold tracking-wider">
+                    <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                    <span>경상국립대학교 AI센터</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">2026학년도 1학기<br>AI기반 교수법 연구회 모집</h1>
+                <div class="bg-white/10 p-5 rounded-lg border border-white/20 backdrop-blur-sm mt-6">
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="target" class="w-5 h-5 text-blue-300 mt-0.5 shrink-0"></i>
+                            <div><strong class="text-blue-100">주제:</strong> 기획부터 제작까지 함께 하는 AX실전 활용 교수법</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="gift" class="w-5 h-5 text-blue-300 mt-0.5 shrink-0"></i>
+                            <div><strong class="text-blue-100">지원 혜택:</strong> 전문가 코칭(3회 지원), 교육·연구 학생지도 비용 30만 포인트 지급</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="calendar-clock" class="w-5 h-5 text-blue-300 mt-0.5 shrink-0"></i>
+                            <div><strong class="text-blue-100">접수 기간:</strong> 2026. 4. 3.(금) 09:00 ~ 4. 10.(금) 18:00</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- 신청 기간 상태 알림 바 -->
+        <div id="statusBanner" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 shadow-md flex items-center justify-between transition-all duration-300">
+            <div class="flex items-center gap-3">
+                <span id="statusIconWrapper"><i data-lucide="alert-circle" class="w-6 h-6"></i></span>
+                <span id="statusMessage" class="font-medium">현재 신청 기간이 아닙니다. (테스트를 위해 아래 관리자 모드를 켜주세요)</span>
+            </div>
+        </div>
+
+        <!-- 메인 폼 -->
+        <form id="applicationForm" class="bg-white p-8 rounded-b-2xl shadow-lg space-y-10">
+            
+            <!-- 공통 정보 -->
+            <section>
+                <h2 class="text-xl font-bold text-[#003366] mb-5 border-b-2 border-[#003366] pb-2 flex items-center gap-2">
+                    <i data-lucide="users" class="w-5 h-5"></i> 연구회 공통 정보
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">연구회 팀명 <span class="text-red-500">*</span></label>
+                        <input type="text" id="teamName" required class="form-input" placeholder="예: 미래교육 혁신팀">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">연구 카테고리 <span class="text-red-500">*</span></label>
+                        <select id="category" required class="form-input bg-white cursor-pointer">
+                            <option value="">카테고리를 선택하세요</option>
+                            <option value="초급(AI 실습)">초급(AI 실습)</option>
+                            <option value="중급(RAG 제작)">중급(RAG 제작)</option>
+                            <option value="고급1(바이브코딩)">고급1(바이브코딩)</option>
+                            <option value="고급2(AI 에이전트)">고급2(AI 에이전트)</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 팀장 정보 -->
+            <section>
+                <div class="flex justify-between items-end border-b-2 border-[#003366] pb-2 mb-5">
+                    <h2 class="text-xl font-bold text-[#003366] flex items-center gap-2">
+                        <i data-lucide="user-check" class="w-5 h-5"></i> 팀장(대표자) 정보
+                    </h2>
+                    <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">역할: 팀장 (고정)</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="hidden" id="leaderRole" value="팀장">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">성명 <span class="text-red-500">*</span></label>
+                        <input type="text" id="leaderName" required class="form-input" placeholder="홍길동">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">교번 <span class="text-red-500">*</span></label>
+                        <input type="text" id="leaderEmpId" required class="form-input" placeholder="교번 입력">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">소속 단과대학 <span class="text-red-500">*</span></label>
+                        <input type="text" id="leaderCollege" required class="form-input" placeholder="예: 인문대학">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">소속 학과 <span class="text-red-500">*</span></label>
+                        <input type="text" id="leaderDept" required class="form-input" placeholder="컴퓨터공학과">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">연락처 <span class="text-red-500">*</span></label>
+                        <input type="text" id="leaderContact" required class="form-input" pattern="01[016789]-?\d{3,4}-?\d{4}" placeholder="010-0000-0000">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">이메일 (Gmail) <span class="text-red-500">*</span></label>
+                        <input type="email" id="leaderEmail" required class="form-input" pattern="[a-zA-Z0-9._%+-]+@gmail\.com" title="Gmail 주소만 허용됩니다." placeholder="example@gmail.com">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 팀원 정보 (동적) -->
+            <section>
+                <div class="flex justify-between items-center border-b-2 border-[#003366] pb-2 mb-5">
+                    <h2 class="text-xl font-bold text-[#003366] flex items-center gap-2">
+                        <i data-lucide="user-plus" class="w-5 h-5"></i> 팀원 정보
+                    </h2>
+                    <span class="text-sm font-medium text-gray-600 bg-blue-50 px-3 py-1 rounded-full">총원: 3~5명 제한</span>
+                </div>
+                
+                <div id="membersContainer" class="space-y-6">
+                    <!-- 동적 팀원 입력란이 여기에 추가됨 -->
+                </div>
+
+                <button type="button" id="addMemberBtn" class="mt-4 w-full py-3 border-2 border-dashed border-[#003366] text-[#003366] font-semibold rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i> 팀원 추가하기 (현재 <span id="memberCountBadge">0</span>명 추가됨 / 최대 4명)
+                </button>
+            </section>
+
+            <!-- 운영 계획서 업로드 -->
+            <section>
+                <h2 class="text-xl font-bold text-[#003366] mb-5 border-b-2 border-[#003366] pb-2 flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-5 h-5"></i> 신청 서식 다운로드 및 제출 안내
+                </h2>
+                <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 text-gray-700 leading-relaxed">
+                    <p class="mb-4">
+                        아래 링크를 통해 <strong>[2026학년도 1학기 AI기반 교수법 연구모임 운영 안내]</strong>를 다운로드하시어 상세 내용을 확인해 주시기 바랍니다.<br>
+                        안내문에 포함된 <strong>신청서 및 운영계획서</strong> 서식을 작성하신 후, 아래 이메일로 제출해 주셔야 최종 신청이 완료됩니다.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 mb-5">
+                        <a href="https://drive.google.com/file/d/1lI9Xk8GnvxalKzwKjbmsUwS7rj-PhTQb/view?usp=drive_link" target="_blank" class="inline-flex items-center justify-center gap-2 bg-white border-2 border-[#003366] text-[#003366] font-semibold py-3 px-6 rounded-lg hover:bg-blue-50 transition-colors shadow-sm">
+                            <i data-lucide="download" class="w-5 h-5"></i> 서식 다운로드 (Google Drive)
+                        </a>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <p class="font-semibold text-gray-800 flex items-center gap-2 mb-1">
+                            <i data-lucide="mail" class="w-4 h-4 text-[#003366]"></i> 서식 제출처 (이메일)
+                        </p>
+                        <p class="text-[#003366] font-medium ml-6 hover:underline"><a href="mailto:eros4424@gmail.com">eros4424@gmail.com</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 제출 버튼 -->
+            <div class="pt-6">
+                <button type="submit" id="submitBtn" class="w-full bg-[#003366] text-white py-4 rounded-xl text-lg font-bold shadow-lg hover:bg-[#002244] transition-colors flex justify-center items-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    <i data-lucide="send" class="w-5 h-5"></i> 교수법 연구회 신청
+                </button>
+            </div>
+        </form>
+
+        <!-- 디버깅용 제어 토글 (실무 환경에서는 제거 권장) -->
+        <div class="mt-8 flex justify-end">
+            <label class="flex items-center gap-2 text-sm text-gray-500 cursor-pointer">
+                <input type="checkbox" id="testModeToggle" class="rounded text-[#003366] focus:ring-[#003366]">
+                [관리자] 강제 접수 활성화 (테스트용)
+            </label>
+        </div>
+    </div>
+
+    <!-- 로딩 오버레이 -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex-col items-center justify-center">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white mb-4"></div>
+        <p class="text-white text-lg font-bold">데이터를 처리 중입니다...</p>
+    </div>
+
+    <!-- 성공 모달 -->
+    <div id="successModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full text-center transform transition-all scale-95 opacity-0" id="modalContent">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="check-circle" class="w-10 h-10 text-[#003366]"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">기본 정보 입력 완료</h3>
+            <div class="text-left bg-gray-50 border border-gray-100 p-5 rounded-xl mb-6 text-gray-700 text-sm leading-relaxed">
+                <p class="mb-4">
+                    시스템에 신청 정보가 정상적으로 접수되었습니다.<br><br>
+                    작성하신 <strong>[2026학년도 1학기 AI 기반 교수법 연구회 신청서]</strong>와 <strong>[AI 기반 교수법 연구회 계획서]</strong>를 아래 안내된 메일로 보내주시면 <strong>최종 신청이 완료</strong>됩니다. 참여해 주셔서 감사합니다.
+                </p>
+                <div class="pt-4 border-t border-gray-200">
+                    <p class="font-bold text-gray-800 mb-1">교육혁신처 AI센터 드림</p>
+                    <p class="flex items-center gap-2 text-gray-600 mt-2"><i data-lucide="phone" class="w-4 h-4"></i> 문의: 055-772-4857</p>
+                    <p class="flex items-center gap-2 text-gray-600 mt-1"><i data-lucide="mail" class="w-4 h-4"></i> 메일: eros4424@gmail.com</p>
+                </div>
+            </div>
+            <button id="closeModalBtn" class="w-full bg-[#003366] text-white py-3 rounded-xl font-bold hover:bg-[#002244] transition-colors">확인</button>
+        </div>
+    </div>
+
+    <script>
+        // Lucide Icons 초기화
+        lucide.createIcons();
+
+        // 상태 관리 상수 및 변수
+        const API_URL = "https://script.google.com/macros/s/AKfycbyDJWhHEFLJJIo8vJ7YDWbWpuYWIkeMfl0VCbajwpjmPmu4epJds5gsabx_M0facWtZ/exec"; // 수정된 GAS 웹 앱 URL
+        const START_DATE = new Date('2026-04-03T09:00:00+09:00');
+        const END_DATE = new Date('2026-04-10T18:00:00+09:00');
+        let memberCount = 0;
+        const MAX_MEMBERS = 4;
+
+        // DOM 요소
+        const submitBtn = document.getElementById('submitBtn');
+        const statusBanner = document.getElementById('statusBanner');
+        const statusIconWrapper = document.getElementById('statusIconWrapper');
+        const statusMessage = document.getElementById('statusMessage');
+        const testModeToggle = document.getElementById('testModeToggle');
+        const addMemberBtn = document.getElementById('addMemberBtn');
+        const membersContainer = document.getElementById('membersContainer');
+        const memberCountBadge = document.getElementById('memberCountBadge');
+        const applicationForm = document.getElementById('applicationForm');
+
+        // 1. 기간 검증 로직
+        function checkApplicationPeriod() {
+            const now = new Date(); // 현재 시간 (테스트 기준일: 2026.03.31)
+            const isTestMode = testModeToggle.checked;
+
+            if (isTestMode || (now >= START_DATE && now <= END_DATE)) {
+                submitBtn.disabled = false;
+                statusBanner.className = 'bg-green-100 border-l-4 border-green-500 text-green-800 p-4 shadow-md flex items-center justify-between transition-all duration-300';
+                statusMessage.innerHTML = '현재 신청 접수 기간입니다.';
+                statusIconWrapper.innerHTML = '<i data-lucide="check-circle" class="w-6 h-6"></i>';
+            } else {
+                submitBtn.disabled = true;
+                statusBanner.className = 'bg-red-100 border-l-4 border-red-500 text-red-800 p-4 shadow-md flex items-center justify-between transition-all duration-300';
+                statusMessage.innerHTML = '신청 기간이 아닙니다. (접수: 2026. 4. 3. ~ 4. 10.)';
+                statusIconWrapper.innerHTML = '<i data-lucide="alert-circle" class="w-6 h-6"></i>';
+            }
+            lucide.createIcons();
+        }
+
+        // 2. 동적 팀원 추가/삭제 로직
+        addMemberBtn.addEventListener('click', () => {
+            if (memberCount >= MAX_MEMBERS) return;
+            memberCount++;
+            
+            const memberId = `member_${Date.now()}`;
+            const memberHTML = `
+                <div id="${memberId}" class="p-5 border border-gray-200 rounded-xl bg-gray-50 relative group transition-all">
+                    <button type="button" onclick="removeMember('${memberId}')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="bg-[#003366] text-white text-xs font-bold px-2 py-1 rounded">팀원 ${memberCount}</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="hidden" name="memberRole" value="팀원">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">성명 <span class="text-red-500">*</span></label>
+                            <input type="text" name="memberName" required class="form-input text-sm" placeholder="이름">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">교번 <span class="text-red-500">*</span></label>
+                            <input type="text" name="memberEmpId" required class="form-input text-sm" placeholder="교번 입력">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">단과대학 <span class="text-red-500">*</span></label>
+                            <input type="text" name="memberCollege" required class="form-input text-sm" placeholder="예: 인문대학">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">학과 <span class="text-red-500">*</span></label>
+                            <input type="text" name="memberDept" required class="form-input text-sm" placeholder="학과명">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">연락처 <span class="text-red-500">*</span></label>
+                            <input type="text" name="memberContact" required pattern="01[016789]-?\\d{3,4}-?\\d{4}" class="form-input text-sm" placeholder="010-0000-0000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">이메일(Gmail) <span class="text-red-500">*</span></label>
+                            <input type="email" name="memberEmail" required pattern="[a-zA-Z0-9._%+-]+@gmail\\.com" class="form-input text-sm" placeholder="example@gmail.com">
+                        </div>
+                    </div>
+                </div>
+            `;
+            membersContainer.insertAdjacentHTML('beforeend', memberHTML);
+            lucide.createIcons();
+            updateMemberState();
+        });
+
+        window.removeMember = function(id) {
+            document.getElementById(id).remove();
+            memberCount--;
+            
+            // 라벨 재정렬
+            const memberCards = membersContainer.children;
+            for(let i=0; i<memberCards.length; i++) {
+                memberCards[i].querySelector('span.bg-\\[\\#003366\\]').innerText = `팀원 ${i+1}`;
+            }
+            updateMemberState();
+        };
+
+        function updateMemberState() {
+            memberCountBadge.innerText = memberCount;
+            if (memberCount >= MAX_MEMBERS) {
+                addMemberBtn.disabled = true;
+                addMemberBtn.innerHTML = `<i data-lucide="ban" class="w-5 h-5"></i> 최대 인원(4명) 도달`;
+            } else {
+                addMemberBtn.disabled = false;
+                addMemberBtn.innerHTML = `<i data-lucide="plus-circle" class="w-5 h-5"></i> 팀원 추가하기 (현재 <span id="memberCountBadge">${memberCount}</span>명 추가됨 / 최대 4명)`;
+            }
+            lucide.createIcons();
+        }
+
+        // 3. 폼 제출 및 데이터 연동 로직
+        applicationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // 총원 검증 로직 (팀장 1 + 팀원 N = 총 3~5명) => 팀원은 최소 2명 필요
+            if (memberCount < 2) {
+                alert('팀원을 최소 2명 이상 추가하여 총원 3~5명을 맞춰주세요.');
+                return;
+            }
+
+            // 제출할 데이터 객체(배열) 구성
+            const teamName = document.getElementById('teamName').value;
+            const category = document.getElementById('category').value;
+            
+            const payload = [];
+
+            // 4-1. 팀장 데이터 푸시
+            payload.push({
+                teamName: teamName,
+                category: category,
+                role: '팀장',
+                empId: document.getElementById('leaderEmpId').value,
+                name: document.getElementById('leaderName').value,
+                college: document.getElementById('leaderCollege').value,
+                dept: document.getElementById('leaderDept').value,
+                contact: document.getElementById('leaderContact').value,
+                email: document.getElementById('leaderEmail').value
+            });
+
+            // 4-2. 팀원 데이터 푸시
+            const memberCards = membersContainer.children;
+            for(let card of memberCards) {
+                payload.push({
+                    teamName: teamName,
+                    category: category,
+                    role: '팀원',
+                    empId: card.querySelector('[name="memberEmpId"]').value,
+                    name: card.querySelector('[name="memberName"]').value,
+                    college: card.querySelector('[name="memberCollege"]').value,
+                    dept: card.querySelector('[name="memberDept"]').value,
+                    contact: card.querySelector('[name="memberContact"]').value,
+                    email: card.querySelector('[name="memberEmail"]').value
+                });
+            }
+
+            const finalData = {
+                membersData: payload
+            };
+
+            // 서버 전송 UI 처리
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            document.getElementById('loadingOverlay').classList.add('flex');
+
+            try {
+                // 실제 연동 시 API_URL에 Fetch 요청.
+                if (API_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
+                    console.log("전송될 데이터 형태:", finalData);
+                    await new Promise(r => setTimeout(r, 1500)); // API 호출 흉내
+                    showSuccessModal();
+                } else {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(finalData),
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' } // CORS 이슈 방지를 위해 text/plain 권장
+                    });
+                    const result = await response.json();
+                    if(result.status === 'success') {
+                        showSuccessModal();
+                    } else {
+                        throw new Error(result.message);
+                    }
+                }
+            } catch (error) {
+                alert('오류가 발생했습니다: ' + error.message);
+            } finally {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                document.getElementById('loadingOverlay').classList.remove('flex');
+            }
+        });
+
+        // 성공 모달 제어
+        const successModal = document.getElementById('successModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        function showSuccessModal() {
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
+            // 애니메이션
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            // 모달 닫기 및 초기화
+            modalContent.classList.add('scale-95', 'opacity-0');
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => {
+                successModal.classList.add('hidden');
+                successModal.classList.remove('flex');
+                applicationForm.reset();
+                membersContainer.innerHTML = '';
+                memberCount = 0;
+                updateMemberState();
+            }, 300);
+        });
+
+    </script>
+</body>
+</html>
